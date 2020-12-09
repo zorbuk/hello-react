@@ -68,7 +68,7 @@ class Books extends React.Component {
         console.log(`Books: ${JSON.stringify(this.state.library)}`)
     }
     getBooksLength(){
-        return books.length;
+        return this.state.library.length;
     }
     render(){
         return(

@@ -107,7 +107,7 @@ var Books = function (_React$Component) {
     }, {
         key: 'getBooksLength',
         value: function getBooksLength() {
-            return books.length;
+            return this.state.library.length;
         }
     }, {
         key: 'render',
