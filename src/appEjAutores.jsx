@@ -51,13 +51,20 @@ class Books extends React.Component {
         })
     }*/
     addLibro(){
+        // -- Query Selectors
         let tituloLibro = document.querySelector('input[name="nuevolibro"]')
         let autorLibro = document.querySelector('input[name="autorlibro"]')
 
+        // -- Push de un Libro Nuevo
         books.push({_id: this.getRandomId(), title: tituloLibro.value, author: autorLibro.value});
 
+        // -- Component library update
         this.setState({library: books});
 
+        // -- Reset campos de texto
+        tituloLibro.value = ''; autorLibro.value = '';
+
+        // -- Debug, display en consola con los nuevos valores de library
         console.log(`Books: ${JSON.stringify(this.state.library)}`)
     }
     getBooksLength(){
@@ -69,7 +76,7 @@ class Books extends React.Component {
             <h1>Consejero literario</h1>
             <h2>Recomendaciones personalizadas al detalle</h2>
             <p>Libros totales: { this.getBooksLength() }</p>
-            <ul>{ this.getLibros() }</ul>
+            <ol>{ this.getLibros() }</ol>
             <label for="nuevolibro">Titulo:</label>
             <input name="nuevolibro" type="text"/>
             <label for="autorlibro">Autor:</label>

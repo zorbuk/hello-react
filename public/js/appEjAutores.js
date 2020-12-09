@@ -88,13 +88,20 @@ var Books = function (_React$Component) {
     }, {
         key: 'addLibro',
         value: function addLibro() {
+            // -- Query Selectors
             var tituloLibro = document.querySelector('input[name="nuevolibro"]');
             var autorLibro = document.querySelector('input[name="autorlibro"]');
 
+            // -- Push de un Libro Nuevo
             books.push({ _id: this.getRandomId(), title: tituloLibro.value, author: autorLibro.value });
 
+            // -- Component library update
             this.setState({ library: books });
 
+            // -- Reset campos de texto
+            tituloLibro.value = '';autorLibro.value = '';
+
+            // -- Debug, display en consola con los nuevos valores de library
             console.log('Books: ' + JSON.stringify(this.state.library));
         }
     }, {
@@ -127,7 +134,7 @@ var Books = function (_React$Component) {
                     this.getBooksLength()
                 ),
                 React.createElement(
-                    'ul',
+                    'ol',
                     null,
                     this.getLibros()
                 ),
