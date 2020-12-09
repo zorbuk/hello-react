@@ -68,14 +68,14 @@ class Books extends React.Component {
         console.log(`Books: ${JSON.stringify(this.state.library)}`)
     }
     getBooksLength(){
-        return this.state.library.length;
+        return (this.state.library.length)<=0?`No hay libros disponibles.`:`Hay ${this.state.library.length} libros.`;
     }
     render(){
         return(
             <div class="book">
             <h1>Consejero literario</h1>
             <h2>Recomendaciones personalizadas al detalle</h2>
-            <p>Libros totales: { this.getBooksLength() }</p>
+            <p>{ this.getBooksLength() }</p>
             <ol>{ this.getLibros() }</ol>
             <label for="nuevolibro">Titulo:</label>
             <input name="nuevolibro" type="text"/>
