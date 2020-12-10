@@ -2,10 +2,10 @@
   "name": "hello-react",
   "version": "1.0.0",
   "description": "",
-  "main": "appEjAutores.jsx",
+  "main": "extends.jsx",
   "scripts": {
     "serve": "live-server public",
-    "code": "babel src/appEjAutores.jsx --out-file=public/js/appEjAutores.js --presets=react,env --watch",
+    "code": "babel src/extends.jsx --out-file=public/js/extends.js --presets=react,env --watch",
     "dev": "npm run code | npm run serve"
   },
   "repository": {

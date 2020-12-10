@@ -70,13 +70,23 @@ class Books extends React.Component {
     getBooksLength(){
         return (this.state.library.length)<=0?`No hay libros disponibles.`:`Hay ${this.state.library.length} libros.`;
     }
+    removeAll(){
+        books = [];
+        this.setState({library: books});
+    }
+    recomendarLibro(){
+        let i = Math.floor(Math.random() * books.length);
+        alert(`La recomendación es '${books[i].title}' de '${books[i].author}'`)
+    }
     render(){
         return(
             <div class="book">
             <h1>Consejero literario</h1>
             <h2>Recomendaciones personalizadas al detalle</h2>
             <p>{ this.getBooksLength() }</p>
+            <p><button onClick={()=>this.recomendarLibro()}>Recomendar libro</button></p>
             <ol>{ this.getLibros() }</ol>
+            <p><button onClick={()=>this.removeAll()}>EXTERMINAR Libros</button></p>
             <label for="nuevolibro">Titulo:</label>
             <input name="nuevolibro" type="text"/>
             <label for="autorlibro">Autor:</label>

@@ -107,7 +107,19 @@ var Books = function (_React$Component) {
     }, {
         key: 'getBooksLength',
         value: function getBooksLength() {
-            return this.state.library.length;
+            return this.state.library.length <= 0 ? 'No hay libros disponibles.' : 'Hay ' + this.state.library.length + ' libros.';
+        }
+    }, {
+        key: 'removeAll',
+        value: function removeAll() {
+            books = [];
+            this.setState({ library: books });
+        }
+    }, {
+        key: 'recomendarLibro',
+        value: function recomendarLibro() {
+            var i = Math.floor(Math.random() * books.length);
+            alert('La recomendaci\xF3n es \'' + books[i].title + '\' de \'' + books[i].author + '\'');
         }
     }, {
         key: 'render',
@@ -130,13 +142,34 @@ var Books = function (_React$Component) {
                 React.createElement(
                     'p',
                     null,
-                    'Libros totales: ',
                     this.getBooksLength()
+                ),
+                React.createElement(
+                    'p',
+                    null,
+                    React.createElement(
+                        'button',
+                        { onClick: function onClick() {
+                                return _this3.recomendarLibro();
+                            } },
+                        'Recomendar libro'
+                    )
                 ),
                 React.createElement(
                     'ol',
                     null,
                     this.getLibros()
+                ),
+                React.createElement(
+                    'p',
+                    null,
+                    React.createElement(
+                        'button',
+                        { onClick: function onClick() {
+                                return _this3.removeAll();
+                            } },
+                        'EXTERMINAR Libros'
+                    )
                 ),
                 React.createElement(
                     'label',
