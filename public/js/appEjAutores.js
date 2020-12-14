@@ -31,7 +31,8 @@ var Books = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (Books.__proto__ || Object.getPrototypeOf(Books)).call(this, props));
 
         _this.state = {
-            library: props.library
+            library: props.library,
+            mensaje: undefined
         };
 
         console.log('Books: ' + JSON.stringify(props));
@@ -86,17 +87,36 @@ var Books = function (_React$Component) {
         }*/
 
     }, {
+        key: 'existe',
+        value: function existe(titulo) {
+            return books.find(function (book) {
+                return book.title.toLowerCase() === titulo.toLowerCase();
+            });
+        }
+    }, {
         key: 'addLibro',
         value: function addLibro() {
             // -- Query Selectors
             var tituloLibro = document.querySelector('input[name="nuevolibro"]');
             var autorLibro = document.querySelector('input[name="autorlibro"]');
 
+            // -- Comprobar si titulo y autor no estan vacios
+            if (!tituloLibro.value || !autorLibro.value) {
+                this.setState({ mensaje: 'Titulo o Autor no pueden estar vacios.' });
+                return;
+            }
+
+            // -- Comprobar si ya existe el libro introducido
+            if (this.existe(tituloLibro.value)) {
+                this.setState({ mensaje: 'El libro \'' + tituloLibro.value + '\' ya existe!' });
+                return;
+            }
+
             // -- Push de un Libro Nuevo
-            books.push({ _id: this.getRandomId(), title: tituloLibro.value, author: autorLibro.value });
+            books.unshift({ _id: this.getRandomId(), title: tituloLibro.value, author: autorLibro.value });
 
             // -- Component library update
-            this.setState({ library: books });
+            this.setState({ library: books, mensaje: 'Se ha agregado el libro <b>' + tituloLibro.value + '</b>' });
 
             // -- Reset campos de texto
             tituloLibro.value = '';autorLibro.value = '';
@@ -119,7 +139,16 @@ var Books = function (_React$Component) {
         key: 'recomendarLibro',
         value: function recomendarLibro() {
             var i = Math.floor(Math.random() * books.length);
-            alert('La recomendaci\xF3n es \'' + books[i].title + '\' de \'' + books[i].author + '\'');
+            this.setState({ mensaje: 'La recomendaci\xF3n es \'' + books[i].title + '\' de \'' + books[i].author + '\'' });
+        }
+    }, {
+        key: 'getMensaje',
+        value: function getMensaje() {
+            return React.createElement(
+                'p',
+                null,
+                this.state.mensaje != undefined ? '' + this.state.mensaje : ''
+            );
         }
     }, {
         key: 'render',
@@ -159,6 +188,11 @@ var Books = function (_React$Component) {
                     'ol',
                     null,
                     this.getLibros()
+                ),
+                this.state.mensaje && React.createElement(
+                    'p',
+                    null,
+                    this.state.mensaje
                 ),
                 React.createElement(
                     'p',

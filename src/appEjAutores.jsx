@@ -21,6 +21,7 @@ class Books extends React.Component {
         super(props);
         this.state = {
             library: props.library,
+            mensaje: undefined
         };
 
         console.log(`Books: ${JSON.stringify(props)}`)
@@ -50,16 +51,31 @@ class Books extends React.Component {
             return <li>{book.author}</li>
         })
     }*/
+    existe(titulo){
+        return books.find(book => book.title.toLowerCase() === titulo.toLowerCase())
+    }
     addLibro(){
         // -- Query Selectors
         let tituloLibro = document.querySelector('input[name="nuevolibro"]')
         let autorLibro = document.querySelector('input[name="autorlibro"]')
 
+        // -- Comprobar si titulo y autor no estan vacios
+        if(!tituloLibro.value || !autorLibro.value){
+            this.setState({mensaje: 'Titulo o Autor no pueden estar vacios.'})
+            return;
+        }
+
+        // -- Comprobar si ya existe el libro introducido
+        if(this.existe(tituloLibro.value)){
+            this.setState({mensaje: `El libro '${tituloLibro.value}' ya existe!`})
+            return;
+        }
+
         // -- Push de un Libro Nuevo
-        books.push({_id: this.getRandomId(), title: tituloLibro.value, author: autorLibro.value});
+        books.unshift({_id: this.getRandomId(), title: tituloLibro.value, author: autorLibro.value});
 
         // -- Component library update
-        this.setState({library: books});
+        this.setState({library: books, mensaje: `Se ha agregado el libro <b>${tituloLibro.value}</b>`});
 
         // -- Reset campos de texto
         tituloLibro.value = ''; autorLibro.value = '';
@@ -76,7 +92,10 @@ class Books extends React.Component {
     }
     recomendarLibro(){
         let i = Math.floor(Math.random() * books.length);
-        alert(`La recomendación es '${books[i].title}' de '${books[i].author}'`)
+        this.setState({mensaje: `La recomendación es '${books[i].title}' de '${books[i].author}'`})
+    }
+    getMensaje(){
+        return <p>{(this.state.mensaje!=undefined)?`${this.state.mensaje}`:``}</p>
     }
     render(){
         return(
@@ -86,6 +105,7 @@ class Books extends React.Component {
             <p>{ this.getBooksLength() }</p>
             <p><button onClick={()=>this.recomendarLibro()}>Recomendar libro</button></p>
             <ol>{ this.getLibros() }</ol>
+            { this.state.mensaje && <p>{this.state.mensaje}</p> }
             <p><button onClick={()=>this.removeAll()}>EXTERMINAR Libros</button></p>
             <label for="nuevolibro">Titulo:</label>
             <input name="nuevolibro" type="text"/>
