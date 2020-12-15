@@ -42,6 +42,8 @@ var Books = function (_React$Component) {
     _createClass(Books, [{
         key: 'getLibros',
         value: function getLibros() {
+            var _this2 = this;
+
             return this.state.library.map(function (book, index) {
                 return React.createElement(
                     'li',
@@ -56,6 +58,14 @@ var Books = function (_React$Component) {
                         'i',
                         null,
                         book.author
+                    ),
+                    ' ',
+                    React.createElement(
+                        'button',
+                        { onClick: function onClick() {
+                                _this2.eliminarLibro(book.title);
+                            } },
+                        '[Eliminar]'
                     )
                 );
             });
@@ -65,13 +75,13 @@ var Books = function (_React$Component) {
     }, {
         key: 'getRandomId',
         value: function getRandomId() {
-            var _this2 = this;
+            var _this3 = this;
 
             var generatedId = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 15),
                 generatedIsAvailable = true;
 
             this.state.library.find(function (book) {
-                if (book._id === _this2.state.library) {
+                if (book._id === _this3.state.library) {
                     generatedIsAvailable = false;
                 }
             });
@@ -92,6 +102,22 @@ var Books = function (_React$Component) {
             return books.find(function (book) {
                 return book.title.toLowerCase() === titulo.toLowerCase();
             });
+        }
+    }, {
+        key: 'eliminarLibro',
+        value: function eliminarLibro(titulo) {
+            console.log(titulo);
+
+            //Filtrar books, devolver el array sin el libro.
+            var _books = books.filter(function (book) {
+                return book.title != titulo;
+            });
+
+            // Actualizar array de books
+            books = _books;
+
+            // Actualizar state de library y enviar el mensaje de libro eliminado.
+            this.setState({ library: _books, mensaje: 'Eliminado el libro ' + titulo });
         }
     }, {
         key: 'addLibro',
@@ -153,7 +179,7 @@ var Books = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            var _this3 = this;
+            var _this4 = this;
 
             return React.createElement(
                 'div',
@@ -179,7 +205,7 @@ var Books = function (_React$Component) {
                     React.createElement(
                         'button',
                         { onClick: function onClick() {
-                                return _this3.recomendarLibro();
+                                return _this4.recomendarLibro();
                             } },
                         'Recomendar libro'
                     )
@@ -200,7 +226,7 @@ var Books = function (_React$Component) {
                     React.createElement(
                         'button',
                         { onClick: function onClick() {
-                                return _this3.removeAll();
+                                return _this4.removeAll();
                             } },
                         'EXTERMINAR Libros'
                     )
@@ -220,7 +246,7 @@ var Books = function (_React$Component) {
                 React.createElement(
                     'button',
                     { onClick: function onClick() {
-                            return _this3.addLibro();
+                            return _this4.addLibro();
                         } },
                     'Nuevo Libro'
                 )

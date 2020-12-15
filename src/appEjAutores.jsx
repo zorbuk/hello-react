@@ -28,7 +28,7 @@ class Books extends React.Component {
     }
     getLibros(){
         return this.state.library.map((book, index) => {
-            return <li><b>{book.title}</b> de <i>{book.author}</i></li>
+            return <li><b>{book.title}</b> de <i>{book.author}</i> <button onClick={() => {this.eliminarLibro(book.title)}}>[Eliminar]</button></li>
         })
     }
     // ---------- NO, SOLO ES UNA PRUEBA, NO SE USARIA ESTO NUNCA XD
@@ -53,6 +53,18 @@ class Books extends React.Component {
     }*/
     existe(titulo){
         return books.find(book => book.title.toLowerCase() === titulo.toLowerCase())
+    }
+    eliminarLibro(titulo){
+        console.log(titulo)
+        
+        //Filtrar books, devolver el array sin el libro.
+        let _books = books.filter((book)=> book.title != titulo)
+
+        // Actualizar array de books
+        books = _books
+
+        // Actualizar state de library y enviar el mensaje de libro eliminado.
+        this.setState({library: _books, mensaje: `Eliminado el libro ${titulo}`})
     }
     addLibro(){
         // -- Query Selectors
